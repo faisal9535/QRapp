@@ -99,58 +99,58 @@
 
   <div class="container">
 
-    <h1>🏭 Production App<br><span style="font-size:20px; color:#d1d5db;">उत्पादन ऐप</span></h1>
+    <h1>🏭 QR Production App</h1>
 
     <p class="subtitle">
-      Scan QR Codes To Submit Production Data<br>उत्पादन डेटा भेजने के लिए QR कोड स्कैन करें
+      Scan QR Codes To Submit Production Data
     </p>
 
     <div class="card">
 
       <div class="scan-box">
-        <div class="scan-title">👷 Worker Name<br><span style="color:#d1d5db; font-size:13px;">कर्मचारी का नाम</span></div>
+        <div class="scan-title">👷 Worker Name</div>
         <button class="scan-btn" onclick="startScanner('worker')">
-          Scan Worker QR<br>कर्मचारी QR स्कैन करें
+          Scan Worker QR
         </button>
         <div class="scan-result" id="worker-result">
-          Not Scanned / स्कैन नहीं किया गया
+          Not Scanned
         </div>
       </div>
 
       <div class="scan-box">
-        <div class="scan-title">🏭 Machine<br><span style="color:#d1d5db; font-size:13px;">मशीन</span></div>
+        <div class="scan-title">🏭 Machine</div>
         <button class="scan-btn" onclick="startScanner('machine')">
-          Scan Machine QR<br>मशीन QR स्कैन करें
+          Scan Machine QR
         </button>
         <div class="scan-result" id="machine-result">
-          Not Scanned / स्कैन नहीं किया गया
+          Not Scanned
         </div>
       </div>
 
       <div class="scan-box">
-        <div class="scan-title">🛠 Tool<br><span style="color:#d1d5db; font-size:13px;">औजार</span></div>
+        <div class="scan-title">🛠 Tool</div>
         <button class="scan-btn" onclick="startScanner('tool')">
-          Scan Tool QR<br>औजार QR स्कैन करें
+          Scan Tool QR
         </button>
         <div class="scan-result" id="tool-result">
-          Not Scanned / स्कैन नहीं किया गया
+          Not Scanned
         </div>
       </div>
 
       <div class="scan-box">
-        <div class="scan-title">📦 Material<br><span style="color:#d1d5db; font-size:13px;">सामग्री</span></div>
+        <div class="scan-title">📦 Material</div>
         <button class="scan-btn" onclick="startScanner('material')">
-          Scan Material QR<br>सामग्री QR स्कैन करें
+          Scan Material QR
         </button>
         <div class="scan-result" id="material-result">
-          Not Scanned / स्कैन नहीं किया गया
+          Not Scanned
         </div>
       </div>
 
       <div id="reader"></div>
 
       <button class="submit-btn" onclick="submitData()">
-        ✅ Submit To Server<br>सर्वर पर भेजें
+        ✅ Submit To Server
       </button>
 
     </div>
@@ -207,12 +207,10 @@
         body: JSON.stringify(productionData)
       })
       .then(() => {
-        alert("डेटा सफलतापूर्वक भेजा गया!
-Production Data Submitted Successfully!");
+        alert("Production Data Submitted Successfully!");
       })
       .catch(() => {
-        alert("सर्वर कनेक्ट नहीं है। डेमो मोड चालू है।
-Server not connected. Demo mode active.");
+        alert("Server not connected. Demo mode active.");
       });
     }
   </script>
