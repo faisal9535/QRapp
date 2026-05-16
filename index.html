@@ -169,41 +169,33 @@
     };
 
     function startScanner(field) {
-  currentField = field;
+      currentField = field;
 
-  document.getElementById("reader").innerHTML = "";
+      document.getElementById("reader").innerHTML = "";
 
-  scanner = new Html5Qrcode("reader");
+      scanner = new Html5Qrcode("reader");
 
-  scanner.start(
-    {
-      facingMode: { ideal: "environment" }
-    },
-    {
-      fps: 10,
-      qrbox: 250,
-      aspectRatio: 1.0
-    },
-    (decodedText) => {
-      productionData[field] = decodedText;
+      scanner.start(
+        { facingMode: "environment" },
+        {
+          fps: 10,
+          qrbox: 250
+        },
+        (decodedText) => {
+          productionData[field] = decodedText;
 
-      document.getElementById(field + "-result").innerText = decodedText;
+          document.getElementById(field + "-result").innerText = decodedText;
 
-      scanner.stop().then(() => {
-        document.getElementById("reader").innerHTML = "";
-      });
-    },
-    (errorMessage) => {
-      console.log(errorMessage);
+          scanner.stop();
+
+          document.getElementById("reader").innerHTML = "";
+        },
+        (errorMessage) => {
+          console.log(errorMessage);
+        }
+      );
     }
-  ).catch((err) => {
-    console.log(err);
 
-    alert(
-      "Camera access failed. Please allow camera permission in Chrome settings."
-    );
-  });
-}
 function submitData() {
   console.log("Submitted Data:", productionData);
 
