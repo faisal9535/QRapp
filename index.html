@@ -1,4 +1,153 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Factory Data App</title>
+
+  <script src="https://unpkg.com/html5-qrcode"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111827;
+      color: white;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #9ca3af;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .card {
+      background: #1f2937;
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .scan-box {
+      background: #374151;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .scan-title {
+      font-size: 15px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .scan-result {
+      color: #34d399;
+      margin-top: 8px;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .scan-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: #16a34a;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #reader {
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>🏭 QR Production App</h1>
+
+    <p class="subtitle">
+      Scan QR Codes To Submit Production Data
+    </p>
+
+    <div class="card">
+
+      <div class="scan-box">
+        <div class="scan-title">👷 Worker Name</div>
+        <button class="scan-btn" onclick="startScanner('worker')">
+          Scan Worker QR
+        </button>
+        <div class="scan-result" id="worker-result">
+          Not Scanned
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">🏭 Machine</div>
+        <button class="scan-btn" onclick="startScanner('machine')">
+          Scan Machine QR
+        </button>
+        <div class="scan-result" id="machine-result">
+          Not Scanned
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">🛠 Tool</div>
+        <button class="scan-btn" onclick="startScanner('tool')">
+          Scan Tool QR
+        </button>
+        <div class="scan-result" id="tool-result">
+          Not Scanned
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">📦 Material</div>
+        <button class="scan-btn" onclick="startScanner('material')">
+          Scan Material QR
+        </button>
+        <div class="scan-result" id="material-result">
+          Not Scanned
+        </div>
+      </div>
+
+      <div id="reader"></div>
 
       <button class="submit-btn" onclick="submitData()">
         ✅ Submit To Server
@@ -67,4 +216,4 @@
   </script>
 
 </body>
-</html>
+</html>``
