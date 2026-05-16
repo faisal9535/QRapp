@@ -196,23 +196,25 @@
       );
     }
 
-    function submitData() {
-      console.log("Submitted Data:", productionData);
+function submitData() {
+  console.log("Submitted Data:", productionData);
 
-      fetch("https://script.google.com/macros/s/AKfycbxkkVbLVfOJM7JnrkvmkY-5HyFxZ41XVV71A1lD_SY5PJbVuZEA0DABvBS7PuxXFAeK/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(productionData)
-      })
-      .then(() => {
-        alert("Production Data Submitted Successfully!");
-      })
-      .catch(() => {
-        alert("Server not connected. Demo mode active.");
-      });
-    }
+  fetch("https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    body: JSON.stringify(productionData)
+  })
+  .then(() => {
+    alert("डेटा सफलतापूर्वक भेजा गया!\nProduction Data Submitted Successfully!");
+  })
+  .catch((error) => {
+    console.log(error);
+    alert("Server connection failed");
+  });
+}
   </script>
 
 </body>
