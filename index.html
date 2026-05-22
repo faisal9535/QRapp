@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QR Factory Data App</title>
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <style>
     body {
@@ -52,6 +52,7 @@
       font-size: 15px;
       margin-bottom: 10px;
       font-weight: bold;
+      line-height: 1.6;
     }
 
     .scan-result {
@@ -71,6 +72,7 @@
       font-size: 15px;
       font-weight: bold;
       cursor: pointer;
+      line-height: 1.5;
     }
 
     .submit-btn {
@@ -99,58 +101,155 @@
 
   <div class="container">
 
-    <h1>🏭 QR Production App</h1>
+    <h1>
+      🏭 Production App<br>
+      <span style="font-size:20px; color:#d1d5db;">
+        उत्पादन ऐप
+      </span>
+    </h1>
 
     <p class="subtitle">
-      Scan QR Codes To Submit Production Data
+      Scan QR Codes To Submit Production Data<br>
+      उत्पादन डेटा भेजने के लिए QR कोड स्कैन करें
     </p>
 
     <div class="card">
 
       <div class="scan-box">
-        <div class="scan-title">👷 Worker Name</div>
-        <button class="scan-btn" onclick="startScanner('worker')">
-          Scan Worker QR
-        </button>
-        <div class="scan-result" id="worker-result">
-          Not Scanned
+        <div class="scan-title">
+          📅 Date / तारीख
+        </div>
+
+        <div class="scan-result">
+          Auto Recorded
         </div>
       </div>
 
       <div class="scan-box">
-        <div class="scan-title">🏭 Machine</div>
-        <button class="scan-btn" onclick="startScanner('machine')">
-          Scan Machine QR
+        <div class="scan-title">
+          📦 PART NAME / पार्ट का नाम
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('partName')">
+          Scan Part QR<br>
+          पार्ट QR स्कैन करें
         </button>
-        <div class="scan-result" id="machine-result">
-          Not Scanned
+
+        <div class="scan-result" id="partName-result">
+          Not Scanned / स्कैन नहीं किया गया
         </div>
       </div>
 
       <div class="scan-box">
-        <div class="scan-title">🛠 Tool</div>
-        <button class="scan-btn" onclick="startScanner('tool')">
-          Scan Tool QR
+        <div class="scan-title">
+          🏭 Machine No / मशीन नंबर
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('machineNo')">
+          Scan Machine QR<br>
+          मशीन QR स्कैन करें
         </button>
-        <div class="scan-result" id="tool-result">
-          Not Scanned
+
+        <div class="scan-result" id="machineNo-result">
+          Not Scanned / स्कैन नहीं किया गया
         </div>
       </div>
 
       <div class="scan-box">
-        <div class="scan-title">📦 Material</div>
-        <button class="scan-btn" onclick="startScanner('material')">
-          Scan Material QR
+        <div class="scan-title">
+          👷 Operator Name / ऑपरेटर का नाम
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('operatorName')">
+          Scan Operator QR<br>
+          ऑपरेटर QR स्कैन करें
         </button>
-        <div class="scan-result" id="material-result">
-          Not Scanned
+
+        <div class="scan-result" id="operatorName-result">
+          Not Scanned / स्कैन नहीं किया गया
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">
+          🌙 Shift / शिफ्ट
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('shift')">
+          Scan Shift QR<br>
+          शिफ्ट QR स्कैन करें
+        </button>
+
+        <div class="scan-result" id="shift-result">
+          Not Scanned / स्कैन नहीं किया गया
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">
+          📊 Total Production / कुल उत्पादन
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('totalProduction')">
+          Scan Production QR<br>
+          उत्पादन QR स्कैन करें
+        </button>
+
+        <div class="scan-result" id="totalProduction-result">
+          Not Scanned / स्कैन नहीं किया गया
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">
+          ⚙️ Production Unit / उत्पादन यूनिट
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('productionUnit')">
+          Scan Unit QR<br>
+          यूनिट QR स्कैन करें
+        </button>
+
+        <div class="scan-result" id="productionUnit-result">
+          Not Scanned / स्कैन नहीं किया गया
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">
+          🚀 Production Speed Count / उत्पादन गति
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('productionSpeedCount')">
+          Scan Speed QR<br>
+          स्पीड QR स्कैन करें
+        </button>
+
+        <div class="scan-result" id="productionSpeedCount-result">
+          Not Scanned / स्कैन नहीं किया गया
+        </div>
+      </div>
+
+      <div class="scan-box">
+        <div class="scan-title">
+          ⚠️ Production Loss Reason / उत्पादन हानि का कारण
+        </div>
+
+        <button class="scan-btn" onclick="startScanner('productionLossReason')">
+          Scan Loss QR<br>
+          लॉस QR स्कैन करें
+        </button>
+
+        <div class="scan-result" id="productionLossReason-result">
+          Not Scanned / स्कैन नहीं किया गया
         </div>
       </div>
 
       <div id="reader"></div>
 
       <button class="submit-btn" onclick="submitData()">
-        ✅ Submit To Server
+        ✅ Submit To Server<br>
+        सर्वर पर भेजें
       </button>
 
     </div>
@@ -162,10 +261,15 @@
     let scanner;
 
     const productionData = {
-      worker: "",
-      machine: "",
-      tool: "",
-      material: ""
+      date: new Date().toLocaleDateString(),
+      partName: "",
+      machineNo: "",
+      operatorName: "",
+      shift: "",
+      totalProduction: "",
+      productionUnit: "",
+      productionSpeedCount: "",
+      productionLossReason: ""
     };
 
     function startScanner(field) {
@@ -176,45 +280,54 @@
       scanner = new Html5Qrcode("reader");
 
       scanner.start(
-        { facingMode: "environment" },
+        {
+          facingMode: { ideal: "environment" }
+        },
         {
           fps: 10,
-          qrbox: 250
+          qrbox: 250,
+          aspectRatio: 1.0
         },
         (decodedText) => {
           productionData[field] = decodedText;
 
           document.getElementById(field + "-result").innerText = decodedText;
 
-          scanner.stop();
-
-          document.getElementById("reader").innerHTML = "";
+          scanner.stop().then(() => {
+            document.getElementById("reader").innerHTML = "";
+          });
         },
         (errorMessage) => {
           console.log(errorMessage);
         }
-      );
+      ).catch((err) => {
+        console.log(err);
+
+        alert(
+          "Camera access failed. Please allow camera permission in Chrome settings."
+        );
+      });
     }
 
-function submitData() {
-  console.log("Submitted Data:", productionData);
+    function submitData() {
+      console.log("Submitted Data:", productionData);
 
-  fetch("https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec", {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "text/plain"
-    },
-    body: JSON.stringify(productionData)
-  })
-  .then(() => {
-    alert("डेटा सफलतापूर्वक भेजा गया!\nProduction Data Submitted Successfully!");
-  })
-  .catch((error) => {
-    console.log(error);
-    alert("Server connection failed");
-  });
-}
+      fetch("https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec", {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        body: JSON.stringify(productionData)
+      })
+      .then(() => {
+        alert("डेटा सफलतापूर्वक भेजा गया!\nProduction Data Submitted Successfully!");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Server connection failed");
+      });
+    }
   </script>
 
 </body>
