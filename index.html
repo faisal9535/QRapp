@@ -1,3 +1,6 @@
+# Updated QR Factory Production App
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,6 +76,7 @@
       font-weight: bold;
       cursor: pointer;
       line-height: 1.5;
+      margin-top: 10px;
     }
 
     .submit-btn {
@@ -88,9 +92,9 @@
       margin-top: 20px;
     }
 
-    #reader {
+    .reader-box {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 15px;
       border-radius: 12px;
       overflow: hidden;
     }
@@ -138,6 +142,8 @@
         <div class="scan-result" id="partName-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="partName-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -153,6 +159,8 @@
         <div class="scan-result" id="machineNo-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="machineNo-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -168,6 +176,8 @@
         <div class="scan-result" id="operatorName-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="operatorName-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -183,6 +193,8 @@
         <div class="scan-result" id="shift-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="shift-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -196,8 +208,10 @@
         </button>
 
         <div class="scan-result" id="totalProduction-result">
-          Not Scanned / स्कैन नहीं किया गया
+          Not Scanned /  स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="totalProduction-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -213,6 +227,8 @@
         <div class="scan-result" id="productionUnit-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="productionUnit-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -228,6 +244,8 @@
         <div class="scan-result" id="productionSpeedCount-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
+
+        <div class="reader-box" id="productionSpeedCount-reader"></div>
       </div>
 
       <div class="scan-box">
@@ -243,9 +261,9 @@
         <div class="scan-result" id="productionLossReason-result">
           Not Scanned / स्कैन नहीं किया गया
         </div>
-      </div>
 
-      <div id="reader"></div>
+        <div class="reader-box" id="productionLossReason-reader"></div>
+      </div>
 
       <button class="submit-btn" onclick="submitData()">
         ✅ Submit To Server<br>
@@ -272,67 +290,68 @@
       productionLossReason: ""
     };
 
-   async function startScanner(field) {
+    async function startScanner(field) {
 
-  currentField = field;
+      currentField = field;
 
-  document.getElementById("reader").innerHTML = "";
+      document.getElementById(field + "-reader").innerHTML = "";
 
-  try {
+      try {
 
-    if (scanner) {
-      await scanner.stop().catch(() => {});
-      await scanner.clear().catch(() => {});
-    }
+        if (scanner) {
+          await scanner.stop().catch(() => {});
+          await scanner.clear().catch(() => {});
+        }
 
-    scanner = new Html5Qrcode("reader");
+        scanner = new Html5Qrcode(field + "-reader");
 
-    const cameras = await Html5Qrcode.getCameras();
+        const cameras = await Html5Qrcode.getCameras();
 
-    if (!cameras || cameras.length === 0) {
-      alert("No camera found");
-      return;
-    }
+        if (!cameras || cameras.length === 0) {
+          alert("No camera found");
+          return;
+        }
 
-    const backCamera =
-      cameras.find(camera =>
-        camera.label.toLowerCase().includes("back")
-      ) || cameras[0];
+        const backCamera =
+          cameras.find(camera =>
+            camera.label.toLowerCase().includes("back")
+          ) || cameras[0];
 
-    scanner.start(
-      backCamera.id,
-      {
-        fps: 10,
-        qrbox: 250
-      },
+        scanner.start(
+          backCamera.id,
+          {
+            fps: 10,
+            qrbox: 250
+          },
 
-      (decodedText) => {
+          (decodedText) => {
 
-        productionData[field] = decodedText;
+            productionData[field] = decodedText;
 
-        document.getElementById(field + "-result").innerText =
-          decodedText;
+            document.getElementById(field + "-result").innerText =
+              decodedText;
 
-        scanner.stop().then(() => {
-          scanner.clear();
-          document.getElementById("reader").innerHTML = "";
-        });
-      },
+            scanner.stop().then(() => {
+              scanner.clear();
+              document.getElementById(field + "-reader").innerHTML = "";
+            });
+          },
 
-      (errorMessage) => {
-        console.log(errorMessage);
+          (errorMessage) => {
+            console.log(errorMessage);
+          }
+        );
+
+      } catch (err) {
+
+        console.log(err);
+
+        alert(
+          "Camera failed. Please refresh page and allow camera permission."
+        );
       }
-    );
+    }
 
-  } catch (err) {
-
-    console.log(err);
-
-    alert(
-      "Camera failed. Please refresh page and allow camera permission."
-    );
-  }
-}
     function submitData() {
       console.log("Submitted Data:", productionData);
 
@@ -356,3 +375,4 @@
 
 </body>
 </html>
+```
