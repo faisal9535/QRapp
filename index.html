@@ -289,66 +289,80 @@
 
     async function startScanner(field) {
 
-      currentField = field;
+  currentField = field;
 
-      document.getElementById(field + "-reader").innerHTML = "";
+  try {
+
+    if (scanner) {
 
       try {
+        await scanner.stop();
+      } catch(e) {}
 
-        if (scanner) {
-          await scanner.stop().catch(() => {});
-          await scanner.clear().catch(() => {});
-        }
+      try {
+        await scanner.clear();
+      } catch(e) {}
 
-        scanner = new Html5Qrcode(field + "-reader");
-
-        const cameras = await Html5Qrcode.getCameras();
-
-        if (!cameras || cameras.length === 0) {
-          alert("No camera found");
-          return;
-        }
-
-        const backCamera =
-          cameras.find(camera =>
-            camera.label.toLowerCase().includes("back")
-          ) || cameras[0];
-
-        scanner.start(
-          backCamera.id,
-          {
-            fps: 10,
-            qrbox: 250
-          },
-
-          (decodedText) => {
-
-            productionData[field] = decodedText;
-
-            document.getElementById(field + "-result").innerText =
-              decodedText;
-
-            scanner.stop().then(() => {
-              scanner.clear();
-              document.getElementById(field + "-reader").innerHTML = "";
-            });
-          },
-
-          (errorMessage) => {
-            console.log(errorMessage);
-          }
-        );
-
-      } catch (err) {
-
-        console.log(err);
-
-        alert(
-          "Camera failed. Please refresh page and allow camera permission."
-        );
-      }
+      scanner = null;
     }
 
+    document.getElementById(field + "-reader").innerHTML = "";
+
+    scanner = new Html5Qrcode(field + "-reader");
+
+    const cameras = await Html5Qrcode.getCameras();
+
+    if (!cameras || cameras.length === 0) {
+      alert("No camera found");
+      return;
+    }
+
+    const backCamera =
+      cameras.find(camera =>
+        camera.label.toLowerCase().includes("back")
+      ) || cameras[0];
+
+    await scanner.start(
+      backCamera.id,
+      {
+        fps: 10,
+        qrbox: 250
+      },
+
+      async (decodedText) => {
+
+        productionData[field] = decodedText;
+
+        document.getElementById(field + "-result").innerText =
+          decodedText;
+
+        try {
+          await scanner.stop();
+        } catch(e) {}
+
+        try {
+          await scanner.clear();
+        } catch(e) {}
+
+        scanner = null;
+
+        document.getElementById(field + "-reader").innerHTML = "";
+      },
+
+      (errorMessage) => {
+        console.log(errorMessage);
+      }
+    );
+
+  } catch (err) {
+
+    console.log(err);
+
+    alert(
+      "Camera failed. Please refresh page and allow camera permission."
+    );
+  }
+}
     function submitData() {
       console.log("Submitted Data:", productionData);
 
