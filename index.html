@@ -272,43 +272,67 @@
       productionLossReason: ""
     };
 
-    function startScanner(field) {
-      currentField = field;
+   async function startScanner(field) {
 
-      document.getElementById("reader").innerHTML = "";
+  currentField = field;
 
-      scanner = new Html5Qrcode("reader");
+  document.getElementById("reader").innerHTML = "";
 
-      scanner.start(
-        {
-          facingMode: { ideal: "environment" }
-        },
-        {
-          fps: 10,
-          qrbox: 250,
-          aspectRatio: 1.0
-        },
-        (decodedText) => {
-          productionData[field] = decodedText;
+  try {
 
-          document.getElementById(field + "-result").innerText = decodedText;
-
-          scanner.stop().then(() => {
-            document.getElementById("reader").innerHTML = "";
-          });
-        },
-        (errorMessage) => {
-          console.log(errorMessage);
-        }
-      ).catch((err) => {
-        console.log(err);
-
-        alert(
-          "Camera access failed. Please allow camera permission in Chrome settings."
-        );
-      });
+    if (scanner) {
+      await scanner.stop().catch(() => {});
+      await scanner.clear().catch(() => {});
     }
 
+    scanner = new Html5Qrcode("reader");
+
+    const cameras = await Html5Qrcode.getCameras();
+
+    if (!cameras || cameras.length === 0) {
+      alert("No camera found");
+      return;
+    }
+
+    const backCamera =
+      cameras.find(camera =>
+        camera.label.toLowerCase().includes("back")
+      ) || cameras[0];
+
+    scanner.start(
+      backCamera.id,
+      {
+        fps: 10,
+        qrbox: 250
+      },
+
+      (decodedText) => {
+
+        productionData[field] = decodedText;
+
+        document.getElementById(field + "-result").innerText =
+          decodedText;
+
+        scanner.stop().then(() => {
+          scanner.clear();
+          document.getElementById("reader").innerHTML = "";
+        });
+      },
+
+      (errorMessage) => {
+        console.log(errorMessage);
+      }
+    );
+
+  } catch (err) {
+
+    console.log(err);
+
+    alert(
+      "Camera failed. Please refresh page and allow camera permission."
+    );
+  }
+}
     function submitData() {
       console.log("Submitted Data:", productionData);
 
