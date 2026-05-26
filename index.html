@@ -329,26 +329,26 @@
         qrbox: 250
       },
 
-      async (decodedText) => {
+     (decodedText) => {
 
-        productionData[field] = decodedText;
+  productionData[field] = decodedText;
 
-        document.getElementById(field + "-result").innerText =
-          decodedText;
+  document.getElementById(field + "-result").innerText =
+    decodedText;
 
-        try {
-          await scanner.stop();
-        } catch(e) {}
+  console.log(productionData);
 
-        try {
-          await scanner.clear();
-        } catch(e) {}
+  scanner.stop().then(() => {
 
-        scanner = null;
+    scanner.clear();
 
-        document.getElementById(field + "-reader").innerHTML = "";
-      },
+    scanner = null;
 
+    document.getElementById(field + "-reader").innerHTML = "";
+
+  });
+
+}
       (errorMessage) => {
         console.log(errorMessage);
       }
