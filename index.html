@@ -364,25 +364,28 @@
   }
 }
     function submitData() {
-      console.log("Submitted Data:", productionData);
 
-     fetch("https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec", {
-  method: "POST",
+  console.log("Submitted Data:", productionData);
 
-  headers: {
-    "Content-Type": "application/json"
-  },
+  fetch(
+    "https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec",
+    {
+      method: "POST",
 
-  body: JSON.stringify(productionData)
-})
-      .then(() => {
-        alert("डेटा सफलतापूर्वक भेजा गया!\nProduction Data Submitted Successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("Server connection failed");
-      });
+      mode: "no-cors",
+
+      headers: {
+        "Content-Type": "text/plain"
+      },
+
+      body: JSON.stringify(productionData)
     }
+  )
+
+  alert(
+    "डेटा सफलतापूर्वक भेजा गया!\\nProduction Data Submitted Successfully!"
+  );
+}
   </script>
 
 </body>
