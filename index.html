@@ -366,14 +366,15 @@
     function submitData() {
       console.log("Submitted Data:", productionData);
 
-      fetch("https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        body: JSON.stringify(productionData)
-      })
+     fetch("https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec", {
+  method: "POST",
+
+  headers: {
+    "Content-Type": "application/json"
+  },
+
+  body: JSON.stringify(productionData)
+})
       .then(() => {
         alert("डेटा सफलतापूर्वक भेजा गया!\nProduction Data Submitted Successfully!");
       })
