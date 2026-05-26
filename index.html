@@ -363,28 +363,21 @@
     );
   }
 }
-    function submitData() {
+   async function submitData() {
+  const url = "https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec";
 
-  console.log("Submitted Data:", productionData);
+  console.log("Submitting:", productionData);
 
-  fetch(
-    "https://script.google.com/macros/s/AKfycbyMuPhlKPOieWNKqLK6FPl-8mvfE114AFQZ_jeDPTR78XdEEH57Aytk6GLE4bPuSUur/exec",
-    {
-      method: "POST",
+  fetch(url, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify(productionData)
+  });
 
-      mode: "no-cors",
-
-      headers: {
-        "Content-Type": "text/plain"
-      },
-
-      body: JSON.stringify(productionData)
-    }
-  )
-
-  alert(
-    "डेटा सफलतापूर्वक भेजा गया!\\nProduction Data Submitted Successfully!"
-  );
+  alert("Production Data Submitted Successfully!");
 }
   </script>
 
